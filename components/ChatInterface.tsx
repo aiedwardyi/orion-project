@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { GoogleGenAI } from "@google/genai";
 import GlassCard from './GlassCard';
@@ -38,7 +37,8 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ isOpen, onClose, isDarkMo
 
     try {
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-      const chat = ai.models.generateContentStream({
+      // CRITICAL FIX: We must await the promise to get the AsyncGenerator/Stream
+      const responseStream = await ai.models.generateContentStream({
         model: 'gemini-3-pro-preview',
         contents: [...messages, { role: 'user', text: userMessage }].map(m => ({
             role: m.role,
@@ -51,16 +51,19 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ isOpen, onClose, isDarkMo
       });
 
       let fullText = '';
+      // Prepare the UI for the model's response
       setMessages(prev => [...prev, { role: 'model', text: '' }]);
 
-      for await (const chunk of chat) {
+      for await (const chunk of responseStream) {
         const chunkText = chunk.text;
-        fullText += chunkText;
-        setMessages(prev => {
-          const newMessages = [...prev];
-          newMessages[newMessages.length - 1].text = fullText;
-          return newMessages;
-        });
+        if (chunkText) {
+          fullText += chunkText;
+          setMessages(prev => {
+            const newMessages = [...prev];
+            newMessages[newMessages.length - 1].text = fullText;
+            return newMessages;
+          });
+        }
       }
     } catch (error) {
       console.error("Gemini Error:", error);
