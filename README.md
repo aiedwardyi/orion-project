@@ -32,7 +32,6 @@ ORION transcends standard event apps by offering a "Tactical Command" experience
 - **Frontend:** React 19 (ES6 Modules)
 - **Styling:** Tailwind CSS (CDN Integration)
 - **Dev Server:** Vite
-- **Intelligence:** Google Gemini API (`@google/genai`)
 - **Typography:** Inter & JetBrains Mono
 
 ## 🎨 Visual Identity
