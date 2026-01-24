@@ -15,17 +15,18 @@ const LiveStreamPopup: React.FC<{ isOpen: boolean; onClose: () => void; isDarkMo
 
   return (
     <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 animate-in fade-in duration-500">
-      <div className="absolute inset-0 bg-black/95 backdrop-blur-xl" onClick={onClose} />
+      <div className="absolute inset-0 bg-black/98 backdrop-blur-2xl" onClick={onClose} />
       
-      <GlassCard isDarkMode={isDarkMode} noPadding className="w-full max-w-2xl aspect-video border-amber-500/40 shadow-[0_0_80px_rgba(245,158,11,0.25)] overflow-hidden relative z-10">
-        {/* Video Background */}
-        <div className="absolute inset-0 w-full h-full bg-black">
+      <GlassCard isDarkMode={isDarkMode} noPadding className="w-full max-w-2xl aspect-video border-white/5 shadow-[0_0_100px_rgba(0,0,0,1)] overflow-hidden relative z-10 bg-black">
+        {/* Video Background - Darkened for High Contrast */}
+        <div className="absolute inset-0 w-full h-full bg-black overflow-hidden">
           <video 
             autoPlay 
             muted 
             loop 
             playsInline
-            className="w-full h-full object-cover opacity-80"
+            style={{ backgroundColor: 'black' }}
+            className="w-full h-full object-cover opacity-20 grayscale saturate-0 pointer-events-none"
           >
             <source src="https://assets.mixkit.co/videos/preview/mixkit-soccer-player-kicking-the-ball-in-the-stadium-4458-large.mp4" type="video/mp4" />
           </video>
@@ -33,49 +34,49 @@ const LiveStreamPopup: React.FC<{ isOpen: boolean; onClose: () => void; isDarkMo
 
         {/* Tactical Overlays */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/40"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/60"></div>
           
-          {/* Enhanced Tactical Scanning Line */}
+          {/* Tactical Scanning Line */}
           <div className="absolute top-0 left-0 right-0 h-[60px] z-50 scanning-beam"></div>
           
-          {/* Grid Lines */}
-          <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle, #f59e0b 1px, transparent 1px)', backgroundSize: '30px 30px' }}></div>
+          {/* Grid Lines - Subtle Amber dots */}
+          <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle, #f59e0b 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
           
           {/* Header Data */}
-          <div className="absolute top-6 left-6 right-6 flex justify-between items-start">
+          <div className="absolute top-6 left-6 right-6 flex justify-between items-start pointer-events-auto">
             <div className="space-y-1">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-red-600 animate-pulse"></div>
-                <span className="text-[10px] font-black text-white uppercase tracking-[0.3em] drop-shadow-md">LIVE SIGNAL • OIS-SAT-04</span>
+                <span className="text-[10px] font-black text-white uppercase tracking-[0.3em]">LIVE SIGNAL • OIS-SAT-04</span>
               </div>
-              <h3 className="text-xl font-black italic tracking-tighter text-white uppercase drop-shadow-lg">Pyongyang Cup: Finals</h3>
+              <h3 className="text-2xl font-black italic tracking-tighter text-white uppercase leading-none">Pyongyang Cup: Finals</h3>
             </div>
             <button 
               onClick={onClose}
-              className="w-10 h-10 rounded-2xl bg-black/40 border border-white/10 flex items-center justify-center text-white hover:bg-amber-500 hover:text-black transition-all pointer-events-auto active:scale-90"
+              className="w-10 h-10 rounded-full bg-black/60 border border-white/10 flex items-center justify-center text-white hover:bg-white hover:text-black transition-all active:scale-90"
             >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5"><path d="M6 18L18 6M6 6l12 12" /></svg>
             </button>
           </div>
 
-          {/* Bottom Data */}
+          {/* Bottom Data Section - Matched to Image */}
           <div className="absolute bottom-6 left-6 right-6 flex justify-between items-end">
-             <div className="bg-black/40 backdrop-blur-md px-4 py-2 rounded-xl border border-white/10">
-                <p className="text-[8px] text-zinc-500 font-black uppercase tracking-widest mb-0.5">Telemetry Data</p>
-                <div className="flex gap-4">
+             <div className="bg-white/[0.03] backdrop-blur-md px-5 py-3 rounded-2xl border border-white/5">
+                <p className="text-[9px] text-zinc-500 font-black uppercase tracking-[0.3em] mb-2">Telemetry Data</p>
+                <div className="flex gap-6">
                    <div className="flex flex-col">
-                      <span className="text-[7px] text-amber-500 font-black uppercase">Signal</span>
-                      <span className="text-[10px] font-black text-white mono">4.2 TB/S</span>
+                      <span className="text-[8px] text-amber-500 font-black uppercase tracking-widest mb-0.5">Signal</span>
+                      <span className="text-sm font-black text-white mono leading-none">4.2 TB/S</span>
                    </div>
-                   <div className="flex flex-col border-l border-white/10 pl-4">
-                      <span className="text-[7px] text-amber-500 font-black uppercase">Latency</span>
-                      <span className="text-[10px] font-black text-white mono">12MS</span>
+                   <div className="flex flex-col border-l border-white/10 pl-6">
+                      <span className="text-[8px] text-amber-500 font-black uppercase tracking-widest mb-0.5">Latency</span>
+                      <span className="text-sm font-black text-white mono leading-none">12MS</span>
                    </div>
                 </div>
              </div>
              <div className="text-right">
-                <p className="text-[10px] font-black text-amber-500 uppercase tracking-widest italic drop-shadow-md">Grand Arena • Sector VIP</p>
-                <p className="text-[8px] text-white/40 font-bold uppercase tracking-[0.4em] mt-1">Direct Encrypted Stream</p>
+                <p className="text-xs font-black text-amber-500 uppercase tracking-[0.2em] italic">Grand Arena • Sector VIP</p>
+                <p className="text-[8px] text-white/40 font-bold uppercase tracking-[0.5em] mt-1.5">Direct Encrypted Stream</p>
              </div>
           </div>
         </div>

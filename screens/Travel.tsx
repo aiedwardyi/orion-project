@@ -18,6 +18,15 @@ const TravelConfirmationModal: React.FC<{ flight: Flight; onClose: () => void; i
         {/* Decorative Success Header */}
         <div className="h-24 bg-emerald-500 flex items-center justify-center relative">
           <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)', backgroundSize: '10px 10px' }}></div>
+          
+          {/* Close Button */}
+          <button 
+            onClick={onClose}
+            className="absolute top-4 right-4 w-8 h-8 rounded-full bg-black/10 flex items-center justify-center text-black hover:bg-black/20 transition-all active:scale-90 z-20"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3"><path d="M6 18L18 6M6 6l12 12" /></svg>
+          </button>
+
           <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-2xl animate-bounce">
             <svg className="w-10 h-10 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="4">
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
@@ -302,7 +311,7 @@ const SeatingChartModal: React.FC<{ flight: Flight; onClose: () => void; isDarkM
              </div>
           </div>
 
-          <div className={`p-6 border-t ${isDarkMode ? 'border-white/5 bg-white/[0.01]' : 'bg-zinc-50 border-zinc-100'}`}>
+          <div className={`p-6 border-t ${isDarkMode ? 'border-white/5 bg-white/[0.01]' : 'border-zinc-100 bg-zinc-50'}`}>
              <div className="flex justify-between items-center mb-6 px-1">
                 <div>
                    <p className="text-[8px] text-zinc-500 font-black uppercase tracking-widest mb-1">Selected Station</p>
@@ -360,7 +369,7 @@ const MealOptionsModal: React.FC<{ flight: Flight; onClose: () => void; isDarkMo
                 className={`w-full p-4 rounded-2xl flex items-center gap-4 border transition-all duration-300 text-left active:scale-[0.98]
                   ${selectedMeal === meal.name 
                     ? 'bg-amber-500/10 border-amber-500 shadow-[0_0_15px_rgba(245,158,11,0.1)]' 
-                    : (isDarkMode ? 'bg-white/[0.03] border-white/5 hover:border-white/20' : 'bg-white border-zinc-200 hover:border-zinc-300')}`}
+                    : (isDarkMode ? 'bg-white/[0.03] text-zinc-300 border border-white/5 rounded-tl-none' : 'bg-zinc-100 text-zinc-800 rounded-tl-none')}`}
               >
                 <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-xl ${selectedMeal === meal.name ? 'bg-amber-500 shadow-lg shadow-amber-500/30' : (isDarkMode ? 'bg-black/40' : 'bg-zinc-100')}`}>
                   {meal.icon}
@@ -376,7 +385,7 @@ const MealOptionsModal: React.FC<{ flight: Flight; onClose: () => void; isDarkMo
             ))}
           </div>
 
-          <div className={`p-6 border-t ${isDarkMode ? 'border-white/5 bg-white/[0.01]' : 'bg-zinc-50 border-zinc-100'}`}>
+          <div className={`p-6 border-t ${isDarkMode ? 'border-white/5 bg-white/[0.01]' : 'border-zinc-100 bg-zinc-50'}`}>
             <button 
               onClick={onClose}
               className="w-full bg-amber-500 hover:bg-amber-400 hover:brightness-110 text-black font-black py-4 rounded-2xl active:scale-[0.98] transition-all shadow-xl shadow-amber-500/20 text-[10px] uppercase tracking-[0.2em]"
