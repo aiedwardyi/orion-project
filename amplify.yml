@@ -3,7 +3,8 @@ frontend:
   phases:
     preBuild:
       commands:
-        - npm ci
+        - nvm use 20
+        - npm install
     build:
       commands:
         - npm run build
@@ -14,8 +15,3 @@ frontend:
   cache:
     paths:
       - node_modules/**/*
-# NOTE: To ensure your SPA handles refreshes correctly on Amplify, 
-# set the following in the 'Rewrites and redirects' section of the console:
-# Source: </^[^.]+$|\.(?!(css|gif|ico|jpg|js|png|txt|svg|woff|woff2|ttf|map|json)$)([^.]+$)/>
-# Target: /index.html
-# Status: 200 (Rewrite)
