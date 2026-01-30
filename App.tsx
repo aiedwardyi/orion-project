@@ -5,25 +5,16 @@ import MyDay from './screens/MyDay';
 import Requests from './screens/Requests';
 import Travel from './screens/Travel';
 import GlassCard from './components/GlassCard';
+import { PoweredBy } from './components/Branding';
 
 type Screen = 'Home' | 'MyDay' | 'Requests' | 'Travel' | 'Profile';
+type CryptoCurrency = 'BTC' | 'ETH' | 'USDT';
 
 interface AppState {
   isAuthenticated: boolean;
   currentScreen: Screen;
   travelTab: 'flights' | 'hotels';
 }
-
-const LiveTimestamp: React.FC = () => {
-  const [time, setTime] = useState(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
-  return <span className="mono">{time}</span>;
-};
 
 const AssistancePopup: React.FC<{ isOpen: boolean; onClose: () => void; isDarkMode: boolean }> = ({ isOpen, onClose, isDarkMode }) => {
   if (!isOpen) return null;
@@ -50,7 +41,7 @@ const AssistancePopup: React.FC<{ isOpen: boolean; onClose: () => void; isDarkMo
         </div>
         <div className="p-8 text-center space-y-6">
           <div className={`w-20 h-20 rounded-full mx-auto flex items-center justify-center ${isDarkMode ? 'bg-amber-500/10 border-amber-500/30' : 'bg-amber-50 border-amber-200'} border-2 animate-pulse`}>
-            <svg className="w-10 h-10 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+            <svg className="w-10 h-10 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
           </div>
           <div className="space-y-1">
             <p className="text-[10px] text-zinc-500 font-black uppercase tracking-widest">Priority Number</p>
@@ -68,6 +59,126 @@ const AssistancePopup: React.FC<{ isOpen: boolean; onClose: () => void; isDarkMo
           >
             Cancel Dispatch
           </button>
+        </div>
+      </GlassCard>
+    </div>
+  );
+};
+
+const CryptoRegistry: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
+  const [activeCrypto, setActiveCrypto] = useState<CryptoCurrency>('ETH');
+  const [copied, setCopied] = useState(false);
+
+  const wallets = {
+    BTC: {
+      address: 'bc1qorion7x92kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh',
+      color: '#f59e0b',
+      network: 'Bitcoin Mainnet'
+    },
+    ETH: {
+      address: '0x71C7656EC7ab88b098defB751B7401B5f6d8976F',
+      color: '#6366f1',
+      network: 'Ethereum Mainnet'
+    },
+    USDT: {
+      address: '0x71C7656EC7ab88b098defB751B7401B5f6d8976F',
+      color: '#26a17b',
+      network: 'ERC-20 Protocol'
+    }
+  };
+
+  const copyAddress = () => {
+    navigator.clipboard.writeText(wallets[activeCrypto].address);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <div className="space-y-4">
+      <div className="flex justify-between items-end px-1">
+        <h3 className="text-[9px] font-black text-zinc-500 uppercase tracking-[0.4em]">FINANCIAL REGISTRY</h3>
+        <div className="flex items-center gap-1.5">
+          <span className="text-[8px] font-black text-amber-500 uppercase tracking-widest">ENCRYPTED PAYMENTS</span>
+        </div>
+      </div>
+      
+      <GlassCard isDarkMode={isDarkMode} className={`p-0 overflow-hidden border-white/5 ${isDarkMode ? 'bg-black/40' : 'bg-white shadow-lg'}`}>
+        {/* Currency Tabs */}
+        <div className={`flex border-b ${isDarkMode ? 'border-white/5 bg-white/[0.02]' : 'border-zinc-100 bg-zinc-50'}`}>
+          {(['BTC', 'ETH', 'USDT'] as CryptoCurrency[]).map((c) => (
+            <button
+              key={c}
+              onClick={() => setActiveCrypto(c)}
+              className={`flex-1 py-5 flex flex-col items-center justify-center transition-all relative ${activeCrypto === c ? 'opacity-100 scale-105' : 'opacity-40 hover:opacity-70'}`}
+            >
+              <span className={`text-[11px] font-black tracking-[0.2em] ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>{c}</span>
+              {activeCrypto === c && (
+                <div 
+                  className="absolute bottom-0 left-4 right-4 h-[3px] rounded-t-full" 
+                  style={{ backgroundColor: wallets[c].color, boxShadow: `0 0 15px ${wallets[c].color}` }}
+                ></div>
+              )}
+            </button>
+          ))}
+        </div>
+
+        <div className="p-6 space-y-6 flex flex-col items-center">
+          {/* QR Container */}
+          <div 
+            className={`relative w-[160px] h-[160px] flex items-center justify-center rounded-2xl border transition-all duration-500 ${isDarkMode ? 'bg-black/60' : 'bg-zinc-50'}`}
+            style={{ borderColor: `${wallets[activeCrypto].color}33` }}
+          >
+            {/* Animated Scanning Beam */}
+            <div 
+              className="absolute top-4 left-4 right-4 h-[2px] z-30 opacity-60 pointer-events-none"
+              style={{ 
+                background: `linear-gradient(to right, transparent, ${wallets[activeCrypto].color}, transparent)`,
+                animation: 'scanner-beam-enhanced 4s linear infinite'
+              }}
+            ></div>
+            
+            <div className="bg-black p-2 rounded-xl shadow-2xl relative z-10 transition-transform hover:scale-105 duration-500">
+               <img 
+                 src={`https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${activeCrypto}:${wallets[activeCrypto].address}&bgcolor=000&color=${wallets[activeCrypto].color.replace('#','')}&margin=0`} 
+                 alt="Payment QR" 
+                 className="w-[120px] h-[120px] object-contain"
+               />
+            </div>
+
+            {/* Corner Accents */}
+            <div className="absolute -top-1 -left-1 w-4 h-4 border-t-2 border-l-2 rounded-tl-md" style={{ borderColor: wallets[activeCrypto].color }}></div>
+            <div className="absolute -top-1 -right-1 w-4 h-4 border-t-2 border-r-2 rounded-tr-md" style={{ borderColor: wallets[activeCrypto].color }}></div>
+            <div className="absolute -bottom-1 -left-1 w-4 h-4 border-b-2 border-l-2 rounded-bl-md" style={{ borderColor: wallets[activeCrypto].color }}></div>
+            <div className="absolute -bottom-1 -right-1 w-4 h-4 border-b-2 border-r-2 rounded-br-md" style={{ borderColor: wallets[activeCrypto].color }}></div>
+          </div>
+
+          <div className="w-full space-y-4">
+            <div className="text-center">
+              <p className="text-[8px] text-zinc-500 font-black uppercase tracking-widest mb-1">Target Network</p>
+              <p className={`text-[10px] font-black uppercase tracking-widest italic ${isDarkMode ? 'text-zinc-300' : 'text-zinc-800'}`}>{wallets[activeCrypto].network}</p>
+            </div>
+
+            <div className={`p-3 rounded-xl border flex flex-col gap-2 transition-all ${isDarkMode ? 'bg-white/[0.03] border-white/5' : 'bg-zinc-50 border-zinc-200'}`}>
+               <p className="text-[7px] text-zinc-500 font-black uppercase tracking-widest">Recipient Address</p>
+               <div className="flex justify-between items-center gap-4">
+                  <p className={`mono text-[9px] break-all flex-1 tracking-wider ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>{wallets[activeCrypto].address}</p>
+                  <button 
+                    onClick={copyAddress}
+                    className={`shrink-0 p-2 rounded-lg transition-all active:scale-90 ${isDarkMode ? 'bg-white/5 text-zinc-400 hover:text-white' : 'bg-white text-zinc-500 shadow-sm'}`}
+                  >
+                    {copied ? (
+                      <svg className="w-3.5 h-3.5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3"><path d="M5 13l4 4L19 7" /></svg>
+                    ) : (
+                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5"><path d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" /></svg>
+                    )}
+                  </button>
+               </div>
+            </div>
+          </div>
+        </div>
+        
+        <div className={`p-3 border-t text-center ${isDarkMode ? 'border-white/5 bg-black/20 text-zinc-600' : 'border-zinc-100 bg-zinc-50 text-zinc-400'}`}>
+           <p className="text-[7px] font-black uppercase tracking-[0.4em]">Settlement Registry Secure • No Confirmation Required</p>
         </div>
       </GlassCard>
     </div>
@@ -199,14 +310,15 @@ const App: React.FC = () => {
         />
       );
       case 'Profile': return (
-        <div className="pb-32 pt-10 px-6 space-y-6 transition-all duration-500 animate-in fade-in slide-in-from-bottom-2 overflow-y-auto max-h-screen hide-scrollbar">
+        <div className="pb-32 pt-10 px-6 space-y-8 transition-all duration-500 animate-in fade-in slide-in-from-bottom-2 overflow-y-auto max-h-screen hide-scrollbar">
           <div className="flex justify-between items-end px-1">
             <div>
               <h2 className={`text-3xl font-black tracking-tight italic uppercase ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>SECURITY PASS</h2>
               <p className="text-zinc-500 text-[10px] font-black uppercase tracking-[0.2em] mt-1">Secure Identity Protocol</p>
             </div>
           </div>
-          <div className="w-full space-y-4">
+
+          <div className="w-full space-y-6">
             <div className="relative group">
               <div className={`absolute -inset-1 bg-gradient-to-r from-amber-500/10 via-transparent to-amber-500/10 rounded-[2.5rem] ${isDarkMode ? 'blur-2xl' : 'blur-xl'} opacity-20 group-hover:opacity-40 transition-opacity duration-1000`}></div>
               <GlassCard isDarkMode={isDarkMode} className={`relative p-0 overflow-hidden ${isDarkMode ? 'border-amber-500/30 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.6)]' : 'border-zinc-200 shadow-lg'}`}>
@@ -248,39 +360,10 @@ const App: React.FC = () => {
                 </div>
               </GlassCard>
             </div>
-            <div className="space-y-3">
-              <div className="flex justify-between items-end px-1">
-                <h3 className="text-[9px] font-black text-zinc-500 uppercase tracking-[0.4em]">ORION VERIFY</h3>
-                <div className="flex items-center gap-1.5">
-                  <div className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,1)]"></div>
-                  <span className="text-[8px] font-black text-emerald-500 uppercase tracking-widest">LIVE LINK</span>
-                </div>
-              </div>
-              <GlassCard isDarkMode={isDarkMode} className={`p-4 ${isDarkMode ? 'border-amber-500/10 bg-gradient-to-b from-neutral-900/40 to-black/60 shadow-xl' : 'bg-white shadow-md border-zinc-200'} flex flex-col items-center justify-center gap-4`}>
-                <div className={`relative w-[180px] h-[180px] flex items-center justify-center rounded-[1.5rem] border mx-auto group cursor-none ${isDarkMode ? 'bg-black/60 border-white/5' : 'bg-zinc-100 border-zinc-200'}`}>
-                  <div className="absolute top-4 left-4 right-4 h-1 bg-gradient-to-r from-transparent via-amber-500 to-transparent blur-sm z-20 scanning-beam pointer-events-none"></div>
-                  <div className="absolute top-4 left-4 right-4 h-[2px] bg-amber-400 z-30 scanning-beam pointer-events-none opacity-80"></div>
-                  <div className="absolute inset-4 rounded-[1.2rem] border border-amber-500/20 qr-verify-pulse pointer-events-none"></div>
-                  <div className="absolute -top-1 -left-1 w-6 h-6 border-t-4 border-l-4 border-amber-500 rounded-tl-lg shadow-[0_0_15px_rgba(245,158,11,0.2)]"></div>
-                  <div className="absolute -top-1 -right-1 w-6 h-6 border-t-4 border-r-4 border-amber-500 rounded-tr-lg shadow-[0_0_15px_rgba(245,158,11,0.2)]"></div>
-                  <div className="absolute -bottom-1 -left-1 w-6 h-6 border-b-4 border-l-4 border-amber-500 rounded-bl-lg shadow-[0_0_15px_rgba(245,158,11,0.2)]"></div>
-                  <div className="absolute -bottom-1 -right-1 w-6 h-6 border-b-4 border-r-4 border-amber-500 rounded-br-lg shadow-[0_0_15px_rgba(245,158,11,0.2)]"></div>
-                  <div className={`bg-black rounded-lg overflow-hidden flex items-center justify-center w-[130px] h-[130px] shadow-2xl relative z-10 transition-transform duration-700 hover:scale-105`}>
-                    <img src={`https://api.qrserver.com/v1/create-qr-code/?size=130x130&data=ORION-AUTH-LINK-V9823-SYNC-${Date.now()}&bgcolor=000&color=f59e0b&margin=0`} alt="Encrypted Pass" className="w-[120px] h-[120px] object-contain opacity-90 brightness-110"/>
-                  </div>
-                </div>
-                <div className="text-center space-y-2">
-                   <div className="inline-flex flex-col items-center">
-                     <p className={`text-sm font-black uppercase tracking-[0.4em] mb-0.5 ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>SCAN ACCESS</p>
-                     <div className="h-0.5 w-8 bg-amber-500 rounded-full"></div>
-                   </div>
-                   <div className="space-y-0.5">
-                      <p className="text-[9px] text-zinc-500 uppercase font-black tracking-[0.2em]">STAMP: <LiveTimestamp /></p>
-                      <p className="text-[7px] text-zinc-600 font-bold uppercase tracking-[0.4em] opacity-40">ORION Systems • Sector 01</p>
-                   </div>
-                </div>
-              </GlassCard>
-            </div>
+
+            {/* Crypto Section ONLY */}
+            <CryptoRegistry isDarkMode={isDarkMode} />
+
             <div className="space-y-4">
               <div className="space-y-2">
                  <h3 className="text-[9px] font-black text-zinc-500 uppercase tracking-[0.4em] px-1">CLEARANCE LEVELS</h3>
@@ -303,6 +386,7 @@ const App: React.FC = () => {
                     ))}
                  </div>
               </div>
+
               <div className="space-y-2">
                 <h3 className="text-[9px] font-black text-zinc-500 uppercase tracking-[0.4em] px-1">SUPPORT & OPERATIONS</h3>
                 <GlassCard isDarkMode={isDarkMode} className={`p-4 ${isDarkMode ? 'border-white/5' : 'border-zinc-200 shadow-sm'}`}>
@@ -332,6 +416,7 @@ const App: React.FC = () => {
               <button onClick={handleLogout} className={`w-full py-6 font-black text-[8px] transition-all uppercase tracking-[0.6em] active:scale-95 ${isDarkMode ? 'text-zinc-800 hover:text-red-500/60' : 'text-zinc-300 hover:text-red-600/60'}`}>Terminate Active Session</button>
             </div>
           </div>
+          <PoweredBy isDarkMode={isDarkMode} />
           <AssistancePopup isOpen={isAssistanceOpen} onClose={() => setIsAssistanceOpen(false)} isDarkMode={isDarkMode} />
         </div>
       );

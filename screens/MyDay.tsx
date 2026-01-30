@@ -2,7 +2,7 @@ import React from 'react';
 import GlassCard from '../components/GlassCard';
 import StatusBadge from '../components/StatusBadge';
 import { MOCK_SCHEDULE } from '../mockData';
-import { PoweredBy } from '../App';
+import { PoweredBy } from '../components/Branding';
 
 interface MyDayProps {
   isDarkMode: boolean;

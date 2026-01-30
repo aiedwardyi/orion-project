@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import GlassCard from '../components/GlassCard';
 import StatusBadge from '../components/StatusBadge';
-import { PoweredBy } from '../App';
+import { PoweredBy } from '../components/Branding';
 
 interface Vehicle {
   id: string;
@@ -75,7 +75,7 @@ const FleetSpecsModal: React.FC<{ vehicle: Vehicle; onClose: () => void; isDarkM
   return (
     <div className="fixed inset-0 z-[130] flex items-center justify-center p-6 animate-in fade-in duration-300">
       <div className="absolute inset-0 bg-black/80 backdrop-blur-md" onClick={onClose} />
-      <GlassCard isDarkMode={isDarkMode} className="w-full max-w-sm border-amber-500/30 shadow-3xl relative z-10 p-0 overflow-hidden">
+      <GlassCard isDarkMode={isDarkMode} className="w-full max-sm border-amber-500/30 shadow-3xl relative z-10 p-0 overflow-hidden">
         <div className={`p-6 border-b ${isDarkMode ? 'border-white/10 bg-white/[0.02]' : 'border-zinc-100 bg-zinc-50'} flex justify-between items-center`}>
           <div>
             <h3 className={`text-xl font-black italic tracking-tighter uppercase ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>Technical Registry</h3>
@@ -108,7 +108,7 @@ const FleetSpecsModal: React.FC<{ vehicle: Vehicle; onClose: () => void; isDarkM
           <div className="space-y-3">
              <p className="text-[9px] text-amber-500 font-black uppercase tracking-[0.2em] border-b border-amber-500/10 pb-2">Interior Cabin Amenities</p>
              <div className="grid grid-cols-1 gap-2">
-                {vehicle.specs?.amenities.map((feature, idx) => (
+                {vehicle.specs?.amenities?.map((feature, idx) => (
                   <div key={idx} className={`flex items-center gap-3 p-2 rounded-lg border ${isDarkMode ? 'bg-white/[0.02] border-white/5' : 'bg-zinc-50 border-zinc-200'}`}>
                     <div className="w-1.5 h-1.5 rounded-full bg-amber-500"></div>
                     <span className={`text-[9px] font-black uppercase tracking-widest ${isDarkMode ? 'text-zinc-400' : 'text-zinc-600'}`}>{feature}</span>

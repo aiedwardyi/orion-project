@@ -1,9 +1,9 @@
-
 import React, { useState, useEffect } from 'react';
 import GlassCard from '../components/GlassCard';
 import StatusBadge from '../components/StatusBadge';
 import { MOCK_FLIGHTS, MOCK_HOTELS } from '../mockData';
 import { Flight, Hotel } from '../types';
+import { PoweredBy } from '../components/Branding';
 
 interface TravelProps {
   isDarkMode: boolean;
@@ -34,7 +34,7 @@ const TravelConfirmationModal: React.FC<{ flight: Flight; onClose: () => void; i
              <div className="flex justify-between items-center text-left">
                 <div>
                    <p className="text-[8px] text-zinc-500 font-black uppercase tracking-widest">Flight Ref</p>
-                   <p className={`text-xs font-black italic ${isDarkMode ? 'text-white' : 'text-zinc-800'}`}>{flight.flightNo}</p>
+                   <p className={`text-xs font-black italic ${isDarkMode ? 'text-white' : 'text-800'}`}>{flight.flightNo}</p>
                 </div>
                 <div className="text-right">
                    <p className="text-[8px] text-zinc-500 font-black uppercase tracking-widest">Status</p>
@@ -88,7 +88,7 @@ const LookupModal: React.FC<{ onClose: () => void; isDarkMode: boolean }> = ({ o
                <p className="text-[9px] text-amber-500 font-black uppercase tracking-[0.2em]">Live Results</p>
                <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-white/[0.03] border-white/5' : 'bg-zinc-50 border-zinc-200'} flex justify-between items-center group cursor-pointer hover:border-amber-500/40 transition-all`}>
                   <div>
-                    <p className={`text-[11px] font-black uppercase italic ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>{query} (Confirmed)</p>
+                    <p className={`text-[11px] font-black uppercase italic ${isDarkMode ? 'text-white' : 'text-900'}`}>{query} (Confirmed)</p>
                     <p className="text-[8px] text-zinc-500 font-bold uppercase tracking-widest mt-0.5">Verified Registry Record</p>
                   </div>
                   <svg className="w-4 h-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3"><path d="M9 5l7 7-7 7" /></svg>
@@ -123,8 +123,8 @@ const DigitalTicketModal: React.FC<{ flight: Flight; onClose: () => void; isDark
             <div className="flex justify-between items-center relative">
               <div className="text-left">
                 <p className="text-[8px] text-zinc-500 font-black uppercase tracking-widest mb-1">Departure</p>
-                <h4 className={`text-3xl font-black italic tracking-tighter ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>{flight.departure.split(' ')[0]}</h4>
-                <p className={`text-[10px] font-bold ${isDarkMode ? 'text-zinc-400' : 'text-zinc-600'}`}>{flight.departure.split('(')[1]?.replace(')', '') || 'Gate TBA'}</p>
+                <h4 className={`text-3xl font-black italic tracking-tighter ${isDarkMode ? 'text-white' : 'text-900'}`}>{flight.departure.split(' ')[0]}</h4>
+                <p className={`text-[10px] font-bold ${isDarkMode ? 'text-zinc-400' : 'text-600'}`}>{flight.departure.split('(')[1]?.replace(')', '') || 'Gate TBA'}</p>
               </div>
               <div className="flex-1 px-4 flex flex-col items-center gap-1 opacity-40">
                 <div className={`w-full h-[2px] ${isDarkMode ? 'bg-white/10' : 'bg-zinc-200'} border-dashed border-t`}></div>
@@ -132,18 +132,18 @@ const DigitalTicketModal: React.FC<{ flight: Flight; onClose: () => void; isDark
               </div>
               <div className="text-right">
                 <p className="text-[8px] text-zinc-500 font-black uppercase tracking-widest mb-1">Arrival</p>
-                <h4 className={`text-3xl font-black italic tracking-tighter ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>{flight.arrival.split(' ')[0]}</h4>
-                <p className={`text-[10px] font-bold ${isDarkMode ? 'text-zinc-400' : 'text-zinc-600'}`}>{flight.arrival.split('(')[1]?.replace(')', '') || 'T1'}</p>
+                <h4 className={`text-3xl font-black italic tracking-tighter ${isDarkMode ? 'text-white' : 'text-900'}`}>{flight.arrival.split(' ')[0]}</h4>
+                <p className={`text-[10px] font-bold ${isDarkMode ? 'text-zinc-400' : 'text-600'}`}>{flight.arrival.split('(')[1]?.replace(')', '') || 'T1'}</p>
               </div>
             </div>
             <div className={`grid grid-cols-3 gap-6 py-6 border-y border-dashed ${isDarkMode ? 'border-white/10' : 'border-zinc-200'}`}>
               <div className="space-y-1">
                 <p className="text-[7px] text-zinc-500 font-black uppercase tracking-widest">Gate</p>
-                <p className={`text-sm font-black tracking-widest ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>4B</p>
+                <p className={`text-sm font-black tracking-widest ${isDarkMode ? 'text-white' : 'text-900'}`}>4B</p>
               </div>
               <div className="space-y-1 text-center border-x border-dashed border-zinc-800/20 px-2">
                 <p className="text-[7px] text-zinc-500 font-black uppercase tracking-widest">Seat</p>
-                <p className={`text-sm font-black tracking-widest ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>12A</p>
+                <p className={`text-sm font-black tracking-widest ${isDarkMode ? 'text-white' : 'text-900'}`}>12A</p>
               </div>
               <div className="space-y-1 text-right">
                 <p className="text-[7px] text-zinc-500 font-black uppercase tracking-widest">Boarding</p>
@@ -172,14 +172,13 @@ const DigitalTicketModal: React.FC<{ flight: Flight; onClose: () => void; isDark
   );
 };
 
-// SeatingChartModal implementation
 const SeatingChartModal: React.FC<{ flight: Flight; onClose: () => void; isDarkMode: boolean }> = ({ flight, onClose, isDarkMode }) => {
   return (
     <div className="fixed inset-0 z-[210] flex items-center justify-center p-6 animate-in fade-in zoom-in-95 duration-500">
       <div className="absolute inset-0 bg-black/90 backdrop-blur-xl" onClick={onClose} />
       <GlassCard isDarkMode={isDarkMode} className="w-full max-sm border-amber-500/40 shadow-3xl relative z-10 p-0 overflow-hidden text-center">
         <div className={`p-6 border-b ${isDarkMode ? 'border-white/10 bg-white/[0.02]' : 'border-zinc-100 bg-zinc-50'} flex justify-between items-center`}>
-          <h3 className={`text-xl font-black italic tracking-tighter uppercase ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>Seating Assignment</h3>
+          <h3 className={`text-xl font-black italic tracking-tighter uppercase ${isDarkMode ? 'text-white' : 'text-900'}`}>Seating Assignment</h3>
           <button onClick={onClose} className="w-10 h-10 rounded-2xl flex items-center justify-center text-zinc-500 hover:text-amber-500 transition-colors">
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5"><path d="M6 18L18 6M6 6l12 12" /></svg>
           </button>
@@ -203,14 +202,13 @@ const SeatingChartModal: React.FC<{ flight: Flight; onClose: () => void; isDarkM
   );
 };
 
-// MealOptionsModal implementation
 const MealOptionsModal: React.FC<{ flight: Flight; onClose: () => void; isDarkMode: boolean }> = ({ flight, onClose, isDarkMode }) => {
   return (
     <div className="fixed inset-0 z-[210] flex items-center justify-center p-6 animate-in fade-in zoom-in-95 duration-500">
       <div className="absolute inset-0 bg-black/90 backdrop-blur-xl" onClick={onClose} />
       <GlassCard isDarkMode={isDarkMode} className="w-full max-sm border-amber-500/40 shadow-3xl relative z-10 p-0 overflow-hidden">
         <div className={`p-6 border-b ${isDarkMode ? 'border-white/10 bg-white/[0.02]' : 'border-zinc-100 bg-zinc-50'} flex justify-between items-center`}>
-          <h3 className={`text-xl font-black italic tracking-tighter uppercase ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>Catering Pref</h3>
+          <h3 className={`text-xl font-black italic tracking-tighter uppercase ${isDarkMode ? 'text-white' : 'text-900'}`}>Catering Pref</h3>
           <button onClick={onClose} className="w-10 h-10 rounded-2xl flex items-center justify-center text-zinc-500 hover:text-amber-500 transition-colors">
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5"><path d="M6 18L18 6M6 6l12 12" /></svg>
           </button>
@@ -229,14 +227,13 @@ const MealOptionsModal: React.FC<{ flight: Flight; onClose: () => void; isDarkMo
   );
 };
 
-// ManageReservationModal implementation
 const ManageReservationModal: React.FC<{ hotel: Hotel; onClose: () => void; isDarkMode: boolean }> = ({ hotel, onClose, isDarkMode }) => {
   return (
     <div className="fixed inset-0 z-[210] flex items-center justify-center p-6 animate-in fade-in zoom-in-95 duration-500">
       <div className="absolute inset-0 bg-black/90 backdrop-blur-xl" onClick={onClose} />
       <GlassCard isDarkMode={isDarkMode} className="w-full max-sm border-amber-500/40 shadow-3xl relative z-10 p-0 overflow-hidden">
         <div className={`p-6 border-b ${isDarkMode ? 'border-white/10 bg-white/[0.02]' : 'border-zinc-100 bg-zinc-50'} flex justify-between items-center`}>
-          <h3 className={`text-xl font-black italic tracking-tighter uppercase ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>Operational Registry</h3>
+          <h3 className={`text-xl font-black italic tracking-tighter uppercase ${isDarkMode ? 'text-white' : 'text-900'}`}>Operational Registry</h3>
           <button onClick={onClose} className="w-10 h-10 rounded-2xl flex items-center justify-center text-zinc-500 hover:text-amber-500 transition-colors">
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5"><path d="M6 18L18 6M6 6l12 12" /></svg>
           </button>
@@ -244,7 +241,7 @@ const ManageReservationModal: React.FC<{ hotel: Hotel; onClose: () => void; isDa
         <div className="p-8 space-y-6">
           <div className="space-y-1">
             <p className="text-[8px] text-zinc-500 font-black uppercase tracking-widest">Target Asset</p>
-            <p className={`text-lg font-black italic uppercase tracking-tighter ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>{hotel.name}</p>
+            <p className={`text-lg font-black italic uppercase tracking-tighter ${isDarkMode ? 'text-white' : 'text-900'}`}>{hotel.name}</p>
           </div>
           <div className="grid grid-cols-2 gap-3">
              <button className="flex flex-col items-center gap-2 p-4 rounded-2xl border border-white/5 bg-white/[0.02] active:scale-95 transition-all">
@@ -252,7 +249,7 @@ const ManageReservationModal: React.FC<{ hotel: Hotel; onClose: () => void; isDa
                 <span className="text-[8px] font-black uppercase tracking-widest text-zinc-400">Modify Dates</span>
              </button>
              <button className="flex flex-col items-center gap-2 p-4 rounded-2xl border border-white/5 bg-white/[0.02] active:scale-95 transition-all">
-                <svg className="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                <svg className="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1-1v3M4 7h16" /></svg>
                 <span className="text-[8px] font-black uppercase tracking-widest text-zinc-400">Abort Stay</span>
              </button>
           </div>
@@ -263,14 +260,13 @@ const ManageReservationModal: React.FC<{ hotel: Hotel; onClose: () => void; isDa
   );
 };
 
-// RoomUpgradeModal implementation
 const RoomUpgradeModal: React.FC<{ hotel: Hotel; onClose: () => void; isDarkMode: boolean }> = ({ hotel, onClose, isDarkMode }) => {
   return (
     <div className="fixed inset-0 z-[210] flex items-center justify-center p-6 animate-in fade-in zoom-in-95 duration-500">
       <div className="absolute inset-0 bg-black/90 backdrop-blur-xl" onClick={onClose} />
       <GlassCard isDarkMode={isDarkMode} className="w-full max-sm border-amber-500/40 shadow-3xl relative z-10 p-0 overflow-hidden">
         <div className={`p-6 border-b ${isDarkMode ? 'border-white/10 bg-white/[0.02]' : 'border-zinc-100 bg-zinc-50'} flex justify-between items-center`}>
-          <h3 className={`text-xl font-black italic tracking-tighter uppercase ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>Tier Elevation</h3>
+          <h3 className={`text-xl font-black italic tracking-tighter uppercase ${isDarkMode ? 'text-white' : 'text-900'}`}>Tier Elevation</h3>
           <button onClick={onClose} className="w-10 h-10 rounded-2xl flex items-center justify-center text-zinc-500 hover:text-amber-500 transition-colors">
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5"><path d="M6 18L18 6M6 6l12 12" /></svg>
           </button>
@@ -282,7 +278,7 @@ const RoomUpgradeModal: React.FC<{ hotel: Hotel; onClose: () => void; isDarkMode
                 <span className="text-[8px] font-black text-amber-500 uppercase tracking-widest italic">Available Upgrade</span>
                 <span className="text-[10px] font-black text-white/40">+{idx + 1}5% Space</span>
               </div>
-              <p className={`text-sm font-black italic tracking-tighter uppercase ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>{tier}</p>
+              <p className={`text-sm font-black italic tracking-tighter uppercase ${isDarkMode ? 'text-white' : 'text-900'}`}>{tier}</p>
             </button>
           ))}
           <p className="text-[7px] text-zinc-500 text-center uppercase tracking-widest mt-4">Upgrade availability subject to Platinum Tier clearance</p>
@@ -292,14 +288,13 @@ const RoomUpgradeModal: React.FC<{ hotel: Hotel; onClose: () => void; isDarkMode
   );
 };
 
-// SpaBookingModal implementation
 const SpaBookingModal: React.FC<{ onClose: () => void; isDarkMode: boolean }> = ({ onClose, isDarkMode }) => {
   return (
     <div className="fixed inset-0 z-[210] flex items-center justify-center p-6 animate-in fade-in zoom-in-95 duration-500">
       <div className="absolute inset-0 bg-black/90 backdrop-blur-xl" onClick={onClose} />
       <GlassCard isDarkMode={isDarkMode} className="w-full max-sm border-amber-500/40 shadow-3xl relative z-10 p-0 overflow-hidden">
         <div className={`p-6 border-b ${isDarkMode ? 'border-white/10 bg-white/[0.02]' : 'border-zinc-100 bg-zinc-50'} flex justify-between items-center`}>
-          <h3 className={`text-xl font-black italic tracking-tighter uppercase ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>Wellness Window</h3>
+          <h3 className={`text-xl font-black italic tracking-tighter uppercase ${isDarkMode ? 'text-white' : 'text-900'}`}>Wellness Window</h3>
           <button onClick={onClose} className="w-10 h-10 rounded-2xl flex items-center justify-center text-zinc-500 hover:text-amber-500 transition-colors">
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5"><path d="M6 18L18 6M6 6l12 12" /></svg>
           </button>
@@ -385,16 +380,16 @@ const Travel: React.FC<TravelProps> = ({ isDarkMode, initialTab = 'flights', onT
                <div className="p-5 flex flex-col gap-6">
                  <div onClick={() => toggleExpand(flight.id)} className="flex justify-between items-center px-2 cursor-pointer">
                     <div className="text-center w-24">
-                      <p className={`text-3xl font-black italic tracking-tighter leading-none ${isDarkMode ? 'text-white' : 'text-zinc-800'}`}>{flight.departure.split(' ')[0]}</p>
+                      <p className={`text-3xl font-black italic tracking-tighter leading-none ${isDarkMode ? 'text-white' : 'text-800'}`}>{flight.departure.split(' ')[0]}</p>
                       <p className="text-[10px] text-amber-500 font-black uppercase tracking-widest mt-1">{flight.depTime}</p>
                       <p className="text-[8px] text-zinc-500 font-bold uppercase tracking-widest mt-1 truncate">{flight.departure.split('(')[1]?.replace(')', '') || 'Gate TBA'}</p>
                     </div>
                     <div className="flex-1 flex flex-col items-center gap-1.5 opacity-40">
-                      <div className={`w-full h-px ${isDarkMode ? 'bg-white/20' : 'bg-zinc-300'} relative`}><div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ${isDarkMode ? 'text-white' : 'text-zinc-800'}`}><svg className="w-4 h-4 rotate-90" fill="currentColor" viewBox="0 0 24 24"><path d="M21 16.5c0 .38-.21.71-.53.88l-7.9 4.44a.996.996 0 0 1-1.14 0l-7.9-4.44A.996.996 0 0 1 3 16.5V7.5c0-.38.21-.71.53-.88l7.9-4.44a.996.996 0 0 1 1.14 0l7.9 4.44c.32.17.53.5.53.88v9z"/></svg></div></div>
+                      <div className={`w-full h-px ${isDarkMode ? 'bg-white/20' : 'bg-zinc-300'} relative`}><div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ${isDarkMode ? 'text-white' : 'text-800'}`}><svg className="w-4 h-4 rotate-90" fill="currentColor" viewBox="0 0 24 24"><path d="M21 16.5c0 .38-.21.71-.53.88l-7.9 4.44a.996.996 0 0 1-1.14 0l-7.9-4.44A.996.996 0 0 1 3 16.5V7.5c0-.38.21-.71.53-.88l7.9-4.44a.996.996 0 0 1 1.14 0l7.9 4.44c.32.17.53.5.53.88v9z"/></svg></div></div>
                       <span className="text-[7px] font-black uppercase tracking-[0.2em] text-zinc-500">Non-Stop Flight</span>
                     </div>
                     <div className="text-center w-24">
-                      <p className={`text-3xl font-black italic tracking-tighter leading-none ${isDarkMode ? 'text-white' : 'text-zinc-800'}`}>{flight.arrival.split(' ')[0]}</p>
+                      <p className={`text-3xl font-black italic tracking-tighter leading-none ${isDarkMode ? 'text-white' : 'text-800'}`}>{flight.arrival.split(' ')[0]}</p>
                       <p className="text-[10px] text-amber-500 font-black uppercase tracking-widest mt-1">{flight.arrTime}</p>
                       <p className="text-[8px] text-zinc-500 font-bold uppercase tracking-widest mt-1 truncate">{flight.arrival.split('(')[1]?.replace(')', '') || 'Pyongyang T1'}</p>
                     </div>
@@ -449,8 +444,8 @@ const Travel: React.FC<TravelProps> = ({ isDarkMode, initialTab = 'flights', onT
               <div className="p-5 space-y-4">
                 <div onClick={() => toggleExpand(hotel.id)} className="flex flex-wrap gap-1.5 cursor-pointer">{hotel.amenities?.map(tag => <span key={tag} className={`text-[7px] font-black uppercase tracking-widest px-1.5 py-0.5 ${isDarkMode ? 'bg-white/5 border-white/10 text-zinc-500' : 'bg-zinc-100 border-zinc-200 text-zinc-500'} border rounded-md`}>{tag}</span>)}</div>
                 <div className={`grid grid-cols-2 gap-4 py-3 border-y ${isDarkMode ? 'border-white/5' : 'border-zinc-100'}`}>
-                  <div><p className="text-[8px] text-zinc-500 font-black uppercase tracking-widest mb-1">Check In</p><p className={`text-xs font-black tracking-widest ${isDarkMode ? 'text-white' : 'text-zinc-800'}`}>July 12 • 14:00</p></div>
-                  <div className="text-right"><p className="text-[8px] text-zinc-500 font-black uppercase tracking-widest mb-1">Check Out</p><p className={`text-xs font-black tracking-widest ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>July 20 • 11:00</p></div>
+                  <div><p className="text-[8px] text-zinc-500 font-black uppercase tracking-widest mb-1">Check In</p><p className={`text-xs font-black tracking-widest ${isDarkMode ? 'text-white' : 'text-800'}`}>July 12 • 14:00</p></div>
+                  <div className="text-right"><p className="text-[8px] text-zinc-500 font-black uppercase tracking-widest mb-1">Check Out</p><p className={`text-xs font-black tracking-widest ${isDarkMode ? 'text-white' : 'text-900'}`}>July 20 • 11:00</p></div>
                 </div>
                 {expandedItem === hotel.id && (
                   <div className="animate-in slide-in-from-top-2 duration-300 space-y-4">
@@ -461,7 +456,7 @@ const Travel: React.FC<TravelProps> = ({ isDarkMode, initialTab = 'flights', onT
                         <button className="text-[8px] font-black text-white bg-amber-500 px-3 py-1 rounded-lg uppercase tracking-widest active:scale-95 transition-all">Secure Contact</button>
                       </div>
                     </div>
-                    <div className="grid grid-cols-2 gap-2">
+                    <div className="grid grid-cols-2 gap-2 mt-4">
                       <button onClick={() => setUpgradeHotel(hotel)} className={`w-full py-3 rounded-xl text-[9px] font-black uppercase tracking-widest border transition-all duration-300 active:scale-95 ${isDarkMode ? 'bg-white/5 border-white/10 text-zinc-400 hover:text-white' : 'bg-zinc-100 border-zinc-200 text-zinc-600'}`}>Room Upgrade</button>
                       <button onClick={() => setIsSpaBookingOpen(true)} className={`w-full py-3 rounded-xl text-[9px] font-black uppercase tracking-widest border transition-all duration-300 active:scale-95 ${isDarkMode ? 'bg-white/5 border-white/10 text-zinc-400 hover:text-white' : 'bg-zinc-100 border-zinc-200 text-zinc-600'}`}>Spa Booking</button>
                     </div>
@@ -469,7 +464,7 @@ const Travel: React.FC<TravelProps> = ({ isDarkMode, initialTab = 'flights', onT
                 )}
                 <div className={`${isDarkMode ? 'bg-white/5 border-white/5' : 'bg-zinc-50 border-zinc-100'} p-3 rounded-xl border`}>
                    <div className="flex justify-between items-center">
-                      <div><p className="text-[8px] text-zinc-500 font-black uppercase tracking-widest mb-0.5">Assigned Accomodation</p><p className={`text-[10px] font-black uppercase tracking-wider ${isDarkMode ? 'text-white' : 'text-zinc-800'}`}>{hotel.roomType}</p></div>
+                      <div><p className="text-[8px] text-zinc-500 font-black uppercase tracking-widest mb-0.5">Assigned Accomodation</p><p className={`text-[10px] font-black uppercase tracking-wider ${isDarkMode ? 'text-white' : 'text-800'}`}>{hotel.roomType}</p></div>
                       <div className={`w-8 h-8 rounded-lg ${isDarkMode ? 'bg-amber-500/10 border-amber-500/20 text-amber-500' : 'bg-amber-50 border-amber-200 text-amber-600'} flex items-center justify-center border`}><svg className="w-4 h-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5"><path d="M8 11V7a4 4 0 118 0v4M5 11h14a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2z" /></svg></div>
                    </div>
                 </div>
@@ -478,18 +473,14 @@ const Travel: React.FC<TravelProps> = ({ isDarkMode, initialTab = 'flights', onT
             </GlassCard>
           ))
         )}
+        <PoweredBy isDarkMode={isDarkMode} />
       </div>
 
-      {/* Lookup Modal */}
       {isLookupOpen && <LookupModal isDarkMode={isDarkMode} onClose={() => setIsLookupOpen(false)} />}
-      
-      {/* Flight Specific Modals */}
       {selectedTicket && <DigitalTicketModal flight={selectedTicket} isDarkMode={isDarkMode} onClose={() => setSelectedTicket(null)} />}
       {seatingFlight && <SeatingChartModal flight={seatingFlight} isDarkMode={isDarkMode} onClose={() => setSeatingFlight(null)} />}
       {mealFlight && <MealOptionsModal flight={mealFlight} isDarkMode={isDarkMode} onClose={() => setMealFlight(null)} />}
       {confirmedFlight && <TravelConfirmationModal flight={confirmedFlight} isDarkMode={isDarkMode} onClose={() => setConfirmedFlight(null)} />}
-      
-      {/* Hotel Specific Modals */}
       {reservationHotel && <ManageReservationModal hotel={reservationHotel} isDarkMode={isDarkMode} onClose={() => setReservationHotel(null)} />}
       {upgradeHotel && <RoomUpgradeModal hotel={upgradeHotel} isDarkMode={isDarkMode} onClose={() => setUpgradeHotel(null)} />}
       {isSpaBookingOpen && <SpaBookingModal isDarkMode={isDarkMode} onClose={() => setIsSpaBookingOpen(false)} />}

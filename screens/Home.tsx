@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import GlassCard from '../components/GlassCard';
 import StatusBadge from '../components/StatusBadge';
 import { MOCK_SCHEDULE } from '../mockData';
+import { PoweredBy } from '../components/Branding';
 
 interface HomeProps {
   isDarkMode: boolean;
@@ -18,7 +19,6 @@ const LiveStreamPopup: React.FC<{ isOpen: boolean; onClose: () => void; isDarkMo
       <div className="absolute inset-0 bg-black/98 backdrop-blur-2xl" onClick={onClose} />
       
       <GlassCard isDarkMode={isDarkMode} noPadding className="w-full max-w-2xl aspect-video border-white/5 shadow-[0_0_100px_rgba(0,0,0,1)] overflow-hidden relative z-10 bg-black">
-        {/* Video Background - Locked to Black with correctly fitted cover */}
         <div className="absolute inset-0 w-full h-full bg-black overflow-hidden">
           <video 
             autoPlay 
@@ -35,17 +35,10 @@ const LiveStreamPopup: React.FC<{ isOpen: boolean; onClose: () => void; isDarkMo
           </video>
         </div>
 
-        {/* Tactical Overlays Wrapper - Flex layout prevents overlap */}
         <div className="absolute inset-0 p-5 sm:p-7 flex flex-col justify-between pointer-events-none">
           <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/60 pointer-events-none"></div>
-          
-          {/* Tactical Scanning Line */}
           <div className="absolute top-0 left-0 right-0 h-[60px] z-50 scanning-beam"></div>
-          
-          {/* Grid Lines - Subtle Amber dots */}
-          <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle, #f59e0b 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
-          
-          {/* Top Section: Header Data */}
+          <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle at top left, white 1px, transparent 0)', backgroundSize: '24px 24px' }}></div>
           <div className="flex justify-between items-start pointer-events-auto relative z-10">
             <div className="space-y-0.5">
               <div className="flex items-center gap-2">
@@ -63,8 +56,6 @@ const LiveStreamPopup: React.FC<{ isOpen: boolean; onClose: () => void; isDarkMo
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5"><path d="M6 18L18 6M6 6l12 12" /></svg>
             </button>
           </div>
-
-          {/* Bottom Section: Data & Telemetry */}
           <div className="flex justify-between items-end pointer-events-auto relative z-10">
              <div className="bg-white/[0.03] backdrop-blur-md px-4 py-2.5 sm:px-5 sm:py-3 rounded-2xl border border-white/5">
                 <p className="text-[8px] text-zinc-500 font-black uppercase tracking-[0.3em] mb-1.5">Telemetry Data</p>
@@ -137,7 +128,6 @@ const Home: React.FC<HomeProps> = ({ isDarkMode, onToggleTheme, onNavigateToTrav
 
   return (
     <div className={`pb-40 pt-10 px-6 space-y-8 animate-in fade-in duration-1000 transition-colors`}>
-      {/* Brand & Profile Header */}
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-3.5">
           <button 
@@ -168,7 +158,6 @@ const Home: React.FC<HomeProps> = ({ isDarkMode, onToggleTheme, onNavigateToTrav
         </button>
       </div>
 
-      {/* Primary Operation Tracker */}
       <div>
         <div className="flex justify-between items-end mb-4 px-1">
           <h3 className="text-[10px] font-black text-zinc-500 uppercase tracking-[0.3em]">Live Feed</h3>
@@ -205,7 +194,6 @@ const Home: React.FC<HomeProps> = ({ isDarkMode, onToggleTheme, onNavigateToTrav
         </GlassCard>
       </div>
 
-      {/* Operational Highlights */}
       <div className="grid grid-cols-2 gap-4">
         <GlassCard 
           isDarkMode={isDarkMode} 
@@ -244,7 +232,6 @@ const Home: React.FC<HomeProps> = ({ isDarkMode, onToggleTheme, onNavigateToTrav
         </GlassCard>
       </div>
 
-      {/* Full Timeline Overview */}
       <div className="space-y-4">
         <div className="flex justify-between items-end px-1">
           <h3 className="text-[10px] font-black text-zinc-500 uppercase tracking-[0.3em]">Immediate Agenda</h3>
@@ -272,7 +259,6 @@ const Home: React.FC<HomeProps> = ({ isDarkMode, onToggleTheme, onNavigateToTrav
         </div>
       </div>
 
-      {/* Interface Config / Theme Settings at the Bottom */}
       <div className="space-y-4 pt-6">
         <h3 className="text-[10px] font-black text-zinc-500 uppercase tracking-[0.4em] px-1">INTERFACE CONFIG</h3>
         <GlassCard isDarkMode={isDarkMode} className={`p-5 flex items-center justify-between group ${isDarkMode ? 'border-white/5' : 'border-zinc-200 shadow-sm'}`}>
@@ -300,7 +286,8 @@ const Home: React.FC<HomeProps> = ({ isDarkMode, onToggleTheme, onNavigateToTrav
         </GlassCard>
       </div>
 
-      {/* Popups */}
+      <PoweredBy isDarkMode={isDarkMode} />
+
       <NotificationPopup 
         isOpen={showNotifications} 
         onClose={() => setShowNotifications(false)} 
