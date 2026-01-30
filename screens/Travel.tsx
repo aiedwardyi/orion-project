@@ -345,7 +345,7 @@ const Travel: React.FC<TravelProps> = ({ isDarkMode, initialTab = 'flights', onT
   ];
 
   return (
-    <div className="pb-24 pt-10 px-6 space-y-6 animate-in fade-in duration-500 overflow-y-auto max-h-screen hide-scrollbar">
+    <div className="pb-28 pt-10 px-6 space-y-6 animate-in fade-in duration-500 overflow-y-auto max-h-screen hide-scrollbar">
       <div className="flex justify-between items-end px-1">
         <div>
           <h2 className={`text-3xl font-black tracking-tight italic uppercase ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>{activeTab}</h2>
@@ -450,7 +450,7 @@ const Travel: React.FC<TravelProps> = ({ isDarkMode, initialTab = 'flights', onT
                 {expandedItem === hotel.id && (
                   <div className="animate-in slide-in-from-top-2 duration-300 space-y-4">
                     <div className={`p-4 rounded-xl ${isDarkMode ? 'bg-white/[0.03]' : 'bg-zinc-50'} border border-white/5 space-y-3`}>
-                      <div><p className="text-[8px] text-amber-500 font-black uppercase tracking-widest mb-1">Arrival Protocol</p><p className={`text-[10px] font-bold leading-relaxed ${isDarkMode ? 'text-zinc-300' : 'text-zinc-700'}`}>{hotel.checkInProcedure}</p></div>
+                      <div><p className="text-[8px] text-zinc-500 font-black uppercase tracking-widest mb-1">Arrival Protocol</p><p className={`text-[10px] font-bold leading-relaxed ${isDarkMode ? 'text-zinc-300' : 'text-zinc-700'}`}>{hotel.checkInProcedure}</p></div>
                       <div className="flex justify-between items-center pt-2 border-t border-white/5">
                         <div><p className="text-[8px] text-zinc-500 font-black uppercase tracking-widest mb-0.5">Assigned Butler</p><p className={`text-[10px] font-black text-amber-500 tracking-wider`}>{hotel.assignedButler}</p></div>
                         <button className="text-[8px] font-black text-white bg-amber-500 px-3 py-1 rounded-lg uppercase tracking-widest active:scale-95 transition-all">Secure Contact</button>

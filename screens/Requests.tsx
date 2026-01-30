@@ -209,7 +209,7 @@ const Taxi: React.FC<RequestsProps> = ({ isDarkMode }) => {
   };
 
   return (
-    <div className="pb-28 pt-10 px-6 space-y-8 animate-in fade-in duration-700 overflow-y-auto max-h-screen hide-scrollbar">
+    <div className="pb-32 pt-10 px-6 space-y-8 animate-in fade-in duration-700 overflow-y-auto max-h-screen hide-scrollbar">
       <div className="flex justify-between items-center">
         <div>
           <h2 className={`text-3xl font-black tracking-tight italic uppercase ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>Taxi</h2>
