@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import GlassCard from '../components/GlassCard';
 import StatusBadge from '../components/StatusBadge';
+import { PoweredBy } from '../App';
 
 interface Vehicle {
   id: string;
@@ -10,7 +11,7 @@ interface Vehicle {
   distance: string;
   eta: string;
   license: string;
-  pos: { top: string; left: string }; // For the map mockup
+  pos: { top: string; left: string };
   specs?: {
     engine: string;
     protection: string;
@@ -336,6 +337,8 @@ const Taxi: React.FC<RequestsProps> = ({ isDarkMode }) => {
            ))}
         </div>
       </div>
+
+      <PoweredBy isDarkMode={isDarkMode} />
 
       {showMap && (
         <TacticalMapModal 

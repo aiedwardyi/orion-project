@@ -1,8 +1,8 @@
-
 import React from 'react';
 import GlassCard from '../components/GlassCard';
 import StatusBadge from '../components/StatusBadge';
 import { MOCK_SCHEDULE } from '../mockData';
+import { PoweredBy } from '../App';
 
 interface MyDayProps {
   isDarkMode: boolean;
@@ -22,7 +22,6 @@ const MyDay: React.FC<MyDayProps> = ({ isDarkMode }) => {
 
   const renderItem = (item: typeof MOCK_SCHEDULE[0], isLast: boolean) => (
     <div key={item.id} className="relative flex gap-6 pl-2 group">
-      {/* Timeline Thread */}
       <div className="flex flex-col items-center">
         <div className={`w-2.5 h-2.5 rounded-full border-2 z-10 transition-colors ${item.group === 'active' ? 'bg-amber-500 border-amber-300 shadow-[0_0_10px_rgba(245,158,11,0.5)]' : (isDarkMode ? 'bg-zinc-800 border-zinc-700' : 'bg-white border-zinc-200')}`}></div>
         {!isLast && <div className={`w-px flex-1 ${isDarkMode ? 'bg-zinc-800' : 'bg-zinc-200'} my-1`}></div>}
@@ -82,6 +81,7 @@ const MyDay: React.FC<MyDayProps> = ({ isDarkMode }) => {
           </>
         )}
       </div>
+      <PoweredBy isDarkMode={isDarkMode} />
     </div>
   );
 };
