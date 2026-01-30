@@ -127,7 +127,7 @@ const Home: React.FC<HomeProps> = ({ isDarkMode, onToggleTheme, onNavigateToTrav
   const [showLiveStream, setShowLiveStream] = useState(false);
 
   return (
-    <div className={`pb-40 pt-10 px-6 space-y-8 animate-in fade-in duration-1000 transition-colors`}>
+    <div className={`pb-28 pt-10 px-6 space-y-8 animate-in fade-in duration-1000 transition-colors`}>
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-3.5">
           <button 

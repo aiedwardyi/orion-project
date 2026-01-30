@@ -310,7 +310,7 @@ const App: React.FC = () => {
         />
       );
       case 'Profile': return (
-        <div className="pb-32 pt-10 px-6 space-y-8 transition-all duration-500 animate-in fade-in slide-in-from-bottom-2 overflow-y-auto max-h-screen hide-scrollbar">
+        <div className="pb-28 pt-10 px-6 space-y-8 transition-all duration-500 animate-in fade-in slide-in-from-bottom-2 overflow-y-auto max-h-screen hide-scrollbar">
           <div className="flex justify-between items-end px-1">
             <div>
               <h2 className={`text-3xl font-black tracking-tight italic uppercase ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>SECURITY PASS</h2>
@@ -406,7 +406,7 @@ const App: React.FC = () => {
                         <p className={`text-xs font-black italic tracking-wider ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>+850 191 442 101</p>
                       </div>
                       <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${isDarkMode ? 'bg-white/5 text-zinc-400' : 'bg-zinc-100 text-zinc-500'} border ${isDarkMode ? 'border-white/10' : 'border-zinc-200'}`}>
-                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
                       </div>
                     </div>
                     <button onClick={() => setIsAssistanceOpen(true)} className={`w-full py-3 border-2 border-amber-500/50 rounded-xl text-[8px] font-black uppercase tracking-[0.3em] transition-all active:scale-[0.98] ${isDarkMode ? 'text-amber-500 hover:bg-amber-500/10' : 'text-amber-600 hover:bg-amber-50'}`}>Request Immediate Assistance</button>
@@ -426,7 +426,7 @@ const App: React.FC = () => {
 
   return (
     <div className={`min-h-screen transition-colors duration-700 ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>
-      <main className="max-w-2xl mx-auto min-h-screen pb-32 relative">
+      <main className="max-w-2xl mx-auto min-h-screen pb-24 relative">
         {renderScreen()}
       </main>
 

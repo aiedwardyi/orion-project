@@ -20,10 +20,17 @@ export const RockNBlockLogo: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }
 );
 
 export const PoweredBy: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => (
-  <div className="pt-16 pb-12 flex flex-col items-center gap-2 opacity-30 hover:opacity-100 transition-all duration-700 cursor-default">
+  <div className="pt-8 pb-4 flex flex-col items-center gap-2 opacity-60 hover:opacity-100 transition-all duration-700">
     <p className={`text-[7px] font-black uppercase tracking-[0.5em] ${isDarkMode ? 'text-zinc-500' : 'text-zinc-400'} ml-[0.5em]`}>
       Powered by
     </p>
-    <RockNBlockLogo isDarkMode={isDarkMode} />
+    <a 
+      href="https://rocknblock.io" 
+      target="_blank" 
+      rel="noopener noreferrer" 
+      className="transition-transform active:scale-95"
+    >
+      <RockNBlockLogo isDarkMode={isDarkMode} />
+    </a>
   </div>
 );

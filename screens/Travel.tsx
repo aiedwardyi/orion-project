@@ -345,7 +345,7 @@ const Travel: React.FC<TravelProps> = ({ isDarkMode, initialTab = 'flights', onT
   ];
 
   return (
-    <div className="pb-32 pt-10 px-6 space-y-6 animate-in fade-in duration-500 overflow-y-auto max-h-screen hide-scrollbar">
+    <div className="pb-24 pt-10 px-6 space-y-6 animate-in fade-in duration-500 overflow-y-auto max-h-screen hide-scrollbar">
       <div className="flex justify-between items-end px-1">
         <div>
           <h2 className={`text-3xl font-black tracking-tight italic uppercase ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>{activeTab}</h2>
