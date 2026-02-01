@@ -8,7 +8,7 @@ import GlassCard from './components/GlassCard';
 import { PoweredBy } from './components/Branding';
 
 type Screen = 'Home' | 'MyDay' | 'Requests' | 'Travel' | 'Profile';
-type CryptoCurrency = 'BTC' | 'ETH' | 'USDT';
+type CryptoCurrency = 'BTC' | 'ETH' | 'MCT';
 
 interface AppState {
   isAuthenticated: boolean;
@@ -80,7 +80,7 @@ const CryptoRegistry: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
       color: '#6366f1',
       network: 'Ethereum Mainnet'
     },
-    USDT: {
+    MCT: {
       address: '0x71C7656EC7ab88b098defB751B7401B5f6d8976F',
       color: '#26a17b',
       network: 'ERC-20 Protocol'
@@ -105,7 +105,7 @@ const CryptoRegistry: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
       <GlassCard isDarkMode={isDarkMode} className={`p-0 overflow-hidden border-white/5 ${isDarkMode ? 'bg-black/40' : 'bg-white shadow-lg'}`}>
         {/* Currency Tabs */}
         <div className={`flex border-b ${isDarkMode ? 'border-white/5 bg-white/[0.02]' : 'border-zinc-100 bg-zinc-50'}`}>
-          {(['BTC', 'ETH', 'USDT'] as CryptoCurrency[]).map((c) => (
+          {(['BTC', 'ETH', 'MCT'] as CryptoCurrency[]).map((c) => (
             <button
               key={c}
               onClick={() => setActiveCrypto(c)}
