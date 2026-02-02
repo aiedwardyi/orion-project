@@ -9,7 +9,7 @@ interface LoginProps {
 
 const Login: React.FC<LoginProps> = ({ onLogin, isDarkMode = true }) => {
   return (
-    <div className={`min-h-screen flex items-center justify-center p-6 bg-cover bg-center transition-all duration-700`} style={{ backgroundImage: "url('https://images.unsplash.com/photo-1504450758481-7338eba7524a?auto=format&fit=crop&q=80&w=1000')" }}>
+    <div className={`min-h-screen flex items-center justify-center p-6 bg-cover bg-center transition-all duration-700 bg-neutral-900`} style={{ backgroundImage: "url('https://images.unsplash.com/photo-1504450758481-7338eba7524a?auto=format&fit=crop&q=80&w=1000')" }}>
       <div className={`absolute inset-0 ${isDarkMode ? 'bg-neutral-950/80 backdrop-blur-sm' : 'bg-white/60 backdrop-blur-md'}`}></div>
       
       <GlassCard isDarkMode={isDarkMode} className={`w-full max-w-sm z-10 p-8 flex flex-col items-center border shadow-3xl ${isDarkMode ? 'border-white/10 shadow-[0_30px_60px_-12px_rgba(0,0,0,0.8)]' : 'border-zinc-200'}`}>

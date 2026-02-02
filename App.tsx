@@ -66,7 +66,7 @@ const AssistancePopup: React.FC<{ isOpen: boolean; onClose: () => void; isDarkMo
 };
 
 const CryptoRegistry: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
-  const [activeCrypto, setActiveCrypto] = useState<CryptoCurrency>('ETH');
+  const [activeCrypto, setActiveCrypto] = useState<CryptoCurrency>('MCT');
   const [copied, setCopied] = useState(false);
 
   const wallets = {
@@ -103,9 +103,8 @@ const CryptoRegistry: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
       </div>
       
       <GlassCard isDarkMode={isDarkMode} className={`p-0 overflow-hidden border-white/5 ${isDarkMode ? 'bg-black/40' : 'bg-white shadow-lg'}`}>
-        {/* Currency Tabs */}
         <div className={`flex border-b ${isDarkMode ? 'border-white/5 bg-white/[0.02]' : 'border-zinc-100 bg-zinc-50'}`}>
-          {(['BTC', 'ETH', 'MCT'] as CryptoCurrency[]).map((c) => (
+          {(['BTC', 'MCT', 'ETH'] as CryptoCurrency[]).map((c) => (
             <button
               key={c}
               onClick={() => setActiveCrypto(c)}
@@ -123,12 +122,10 @@ const CryptoRegistry: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
         </div>
 
         <div className="p-6 space-y-6 flex flex-col items-center">
-          {/* QR Container */}
           <div 
             className={`relative w-[160px] h-[160px] flex items-center justify-center rounded-2xl border transition-all duration-500 ${isDarkMode ? 'bg-black/60' : 'bg-zinc-50'}`}
             style={{ borderColor: `${wallets[activeCrypto].color}33` }}
           >
-            {/* Animated Scanning Beam */}
             <div 
               className="absolute top-4 left-4 right-4 h-[2px] z-30 opacity-60 pointer-events-none"
               style={{ 
@@ -145,7 +142,6 @@ const CryptoRegistry: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
                />
             </div>
 
-            {/* Corner Accents */}
             <div className="absolute -top-1 -left-1 w-4 h-4 border-t-2 border-l-2 rounded-tl-md" style={{ borderColor: wallets[activeCrypto].color }}></div>
             <div className="absolute -top-1 -right-1 w-4 h-4 border-t-2 border-r-2 rounded-tr-md" style={{ borderColor: wallets[activeCrypto].color }}></div>
             <div className="absolute -bottom-1 -left-1 w-4 h-4 border-b-2 border-l-2 rounded-bl-md" style={{ borderColor: wallets[activeCrypto].color }}></div>
@@ -191,71 +187,120 @@ const App: React.FC = () => {
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [isAssistanceOpen, setIsAssistanceOpen] = useState(false);
   const [travelTab, setTravelTab] = useState<'flights' | 'hotels'>('flights');
+  const profileScrollRef = useRef<HTMLDivElement>(null);
   
-  const currentStateRef = useRef<AppState>({ isAuthenticated, currentScreen, travelTab });
-  
-  useEffect(() => {
-    currentStateRef.current = { isAuthenticated, currentScreen, travelTab };
-  }, [isAuthenticated, currentScreen, travelTab]);
-
-  const navigateTo = useCallback((screen: Screen, tab: 'flights' | 'hotels' = 'flights', push: boolean = true) => {
-    const isDifferent = screen !== currentStateRef.current.currentScreen || 
-                        tab !== currentStateRef.current.travelTab;
+  // Helper to parse URL parameters for deep linking
+  const getUrlParams = useCallback(() => {
+    const params = new URLSearchParams(window.location.search);
+    const screenParam = params.get('view');
+    const tabParam = params.get('tab');
     
-    if (isDifferent) {
-      setCurrentScreen(screen);
-      setTravelTab(tab);
-      
-      if (push) {
-        const state: AppState = { isAuthenticated: true, currentScreen: screen, travelTab: tab };
-        window.history.pushState(state, '', '');
-      }
-
-      if (screen !== currentStateRef.current.currentScreen) {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-    }
-  }, []);
-
-  const handleLogin = useCallback(() => {
-    setIsAuthenticated(true);
-    setCurrentScreen('Home');
-    setTravelTab('flights');
-    const state: AppState = { isAuthenticated: true, currentScreen: 'Home', travelTab: 'flights' };
-    window.history.replaceState(state, '', '');
-  }, []);
-
-  const handleLogout = useCallback(() => {
-    setIsAuthenticated(false);
-    window.history.pushState({ isAuthenticated: false }, '', '');
+    const validScreens: Screen[] = ['Home', 'MyDay', 'Requests', 'Travel', 'Profile'];
+    const screen = validScreens.includes(screenParam as Screen) ? (screenParam as Screen) : 'Home';
+    
+    const validTabs = ['flights', 'hotels'];
+    const tab = validTabs.includes(tabParam as string) ? (tabParam as 'flights' | 'hotels') : 'flights';
+    
+    return { screen, tab };
   }, []);
 
   useEffect(() => {
+    // Initial load check
+    const { screen, tab } = getUrlParams();
+    
+    // Check history state for auth
+    if (window.history.state?.isAuthenticated) {
+      setIsAuthenticated(true);
+      setCurrentScreen(window.history.state.currentScreen || screen);
+      setTravelTab(window.history.state.travelTab || tab);
+    } else {
+      // If not authenticated, we stay on Login but remember intentions via URL params logic in handleLogin
+      setIsAuthenticated(false);
+      // We don't overwrite the URL here to preserve the shared link
+    }
+
     const handlePopState = (event: PopStateEvent) => {
       const state = event.state as AppState | null;
-      if (state) {
-        setIsAuthenticated(state.isAuthenticated);
-        if (state.isAuthenticated) {
-          setCurrentScreen(state.currentScreen || 'Home');
-          setTravelTab(state.travelTab || 'flights');
-        }
+      if (state && state.isAuthenticated) {
+        setIsAuthenticated(true);
+        setCurrentScreen(state.currentScreen);
+        setTravelTab(state.travelTab);
       } else {
         setIsAuthenticated(false);
       }
     };
 
     window.addEventListener('popstate', handlePopState);
-    if (!window.history.state) {
-      window.history.replaceState({ isAuthenticated: false }, '', '');
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [getUrlParams]);
+
+  useEffect(() => {
+    if (currentScreen === 'Profile' && profileScrollRef.current) {
+        const timer = setTimeout(() => {
+            profileScrollRef.current?.scrollTo(0, 0);
+        }, 10);
+        return () => clearTimeout(timer);
+    }
+  }, [currentScreen]);
+
+  const updateUrl = (screen: Screen, tab: 'flights' | 'hotels') => {
+    const url = new URL(window.location.href);
+    url.searchParams.set('view', screen);
+    if (screen === 'Travel') {
+      url.searchParams.set('tab', tab);
     } else {
-      const existingState = window.history.state as AppState;
-      if (existingState.isAuthenticated) {
-        setIsAuthenticated(true);
-        setCurrentScreen(existingState.currentScreen || 'Home');
-        setTravelTab(existingState.travelTab || 'flights');
+      url.searchParams.delete('tab');
+    }
+    return url.search.toString(); // returns ?view=...
+  };
+
+  const navigateTo = useCallback((screen: Screen, tab: 'flights' | 'hotels' = 'flights', push: boolean = true) => {
+    setCurrentScreen(screen);
+    setTravelTab(tab);
+    
+    if (push) {
+      const state: AppState = { isAuthenticated: true, currentScreen: screen, travelTab: tab };
+      const queryString = `?view=${screen}${screen === 'Travel' ? `&tab=${tab}` : ''}`;
+      try {
+        window.history.pushState(state, '', queryString);
+      } catch (e) {
+        // Fallback for environments where history API is restricted (e.g. blobs/iframes)
+        console.warn('Navigation history update skipped:', e);
       }
     }
-    return () => window.removeEventListener('popstate', handlePopState);
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
+  const handleLogin = useCallback(() => {
+    setIsAuthenticated(true);
+    
+    // Check if there was an intended destination in the URL
+    const { screen, tab } = getUrlParams();
+    
+    setCurrentScreen(screen);
+    setTravelTab(tab);
+    
+    const state: AppState = { isAuthenticated: true, currentScreen: screen, travelTab: tab };
+    // Update URL to match state (or keep it if it was already correct)
+    const queryString = `?view=${screen}${screen === 'Travel' ? `&tab=${tab}` : ''}`;
+    
+    try {
+      window.history.replaceState(state, '', queryString);
+    } catch (e) {
+      console.warn('Login history update skipped:', e);
+    }
+  }, [getUrlParams]);
+
+  const handleLogout = useCallback(() => {
+    setIsAuthenticated(false);
+    // Clear state but keep URL clean or maybe redirect to home query?
+    // Ideally clear query params on logout to prevent confusion
+    try {
+      window.history.pushState({ isAuthenticated: false }, '', window.location.pathname);
+    } catch (e) {
+      console.warn('Logout history update skipped:', e);
+    }
   }, []);
 
   const toggleTheme = () => setIsDarkMode(!isDarkMode);
@@ -310,7 +355,7 @@ const App: React.FC = () => {
         />
       );
       case 'Profile': return (
-        <div className="pb-28 pt-10 px-6 space-y-8 transition-all duration-500 animate-in fade-in slide-in-from-bottom-2 overflow-y-auto max-h-screen hide-scrollbar">
+        <div ref={profileScrollRef} className="pb-24 pt-10 px-6 space-y-8 transition-all duration-500 animate-in fade-in slide-in-from-bottom-2 overflow-y-auto max-h-screen hide-scrollbar">
           <div className="flex justify-between items-end px-1">
             <div>
               <h2 className={`text-3xl font-black tracking-tight italic uppercase ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>SECURITY PASS</h2>
@@ -361,7 +406,6 @@ const App: React.FC = () => {
               </GlassCard>
             </div>
 
-            {/* Crypto Section ONLY */}
             <CryptoRegistry isDarkMode={isDarkMode} />
 
             <div className="space-y-4">

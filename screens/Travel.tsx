@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import GlassCard from '../components/GlassCard';
 import StatusBadge from '../components/StatusBadge';
 import { MOCK_FLIGHTS, MOCK_HOTELS } from '../mockData';
@@ -15,10 +15,10 @@ const TravelConfirmationModal: React.FC<{ flight: Flight; onClose: () => void; i
   return (
     <div className="fixed inset-0 z-[210] flex items-center justify-center p-6 animate-in fade-in zoom-in-95 duration-500">
       <div className="absolute inset-0 bg-black/90 backdrop-blur-xl" onClick={onClose} />
-      <GlassCard isDarkMode={isDarkMode} className="w-full max-sm border-emerald-500/40 shadow-[0_0_100px_rgba(16,185,129,0.2)] overflow-hidden relative z-10 p-0 text-center">
+      <GlassCard disableHoverEffects isDarkMode={isDarkMode} className="w-full max-sm border-emerald-500/40 shadow-[0_0_100px_rgba(16,185,129,0.2)] overflow-hidden relative z-10 p-0 text-center">
         <div className="h-24 bg-emerald-500 flex items-center justify-center relative">
           <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)', backgroundSize: '10px 10px' }}></div>
-          <button onClick={onClose} className="absolute top-4 right-4 w-8 h-8 rounded-full bg-black/10 flex items-center justify-center text-black hover:bg-black/20 transition-all active:scale-90 z-20">
+          <button onClick={onClose} className="absolute top-4 right-4 w-8 h-8 rounded-full bg-black/10 flex items-center justify-center text-black hover:bg-black/20 transition-all active:scale-90 z-20 cursor-pointer">
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3"><path d="M6 18L18 6M6 6l12 12" /></svg>
           </button>
           <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-2xl animate-bounce">
@@ -60,7 +60,7 @@ const LookupModal: React.FC<{ onClose: () => void; isDarkMode: boolean }> = ({ o
   return (
     <div className="fixed inset-0 z-[140] flex items-center justify-center p-6 animate-in fade-in duration-300">
       <div className="absolute inset-0 bg-black/60 backdrop-blur-md" onClick={onClose} />
-      <GlassCard isDarkMode={isDarkMode} className="w-full max-sm border-amber-500/30 shadow-3xl relative z-10 p-0 overflow-hidden">
+      <GlassCard disableHoverEffects isDarkMode={isDarkMode} className="w-full max-sm border-amber-500/30 shadow-3xl relative z-10 p-0 overflow-hidden">
         <div className={`p-6 border-b ${isDarkMode ? 'border-white/10 bg-white/[0.02]' : 'border-zinc-100 bg-zinc-50'} flex justify-between items-center`}>
           <div>
             <h3 className={`text-xl font-black italic tracking-tighter uppercase ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>Global Lookup</h3>
@@ -176,7 +176,7 @@ const SeatingChartModal: React.FC<{ flight: Flight; onClose: () => void; isDarkM
   return (
     <div className="fixed inset-0 z-[210] flex items-center justify-center p-6 animate-in fade-in zoom-in-95 duration-500">
       <div className="absolute inset-0 bg-black/90 backdrop-blur-xl" onClick={onClose} />
-      <GlassCard isDarkMode={isDarkMode} className="w-full max-sm border-amber-500/40 shadow-3xl relative z-10 p-0 overflow-hidden text-center">
+      <GlassCard disableHoverEffects isDarkMode={isDarkMode} className="w-full max-sm border-amber-500/40 shadow-3xl relative z-10 p-0 overflow-hidden text-center">
         <div className={`p-6 border-b ${isDarkMode ? 'border-white/10 bg-white/[0.02]' : 'border-zinc-100 bg-zinc-50'} flex justify-between items-center`}>
           <h3 className={`text-xl font-black italic tracking-tighter uppercase ${isDarkMode ? 'text-white' : 'text-900'}`}>Seating Assignment</h3>
           <button onClick={onClose} className="w-10 h-10 rounded-2xl flex items-center justify-center text-zinc-500 hover:text-amber-500 transition-colors">
@@ -206,7 +206,7 @@ const MealOptionsModal: React.FC<{ flight: Flight; onClose: () => void; isDarkMo
   return (
     <div className="fixed inset-0 z-[210] flex items-center justify-center p-6 animate-in fade-in zoom-in-95 duration-500">
       <div className="absolute inset-0 bg-black/90 backdrop-blur-xl" onClick={onClose} />
-      <GlassCard isDarkMode={isDarkMode} className="w-full max-sm border-amber-500/40 shadow-3xl relative z-10 p-0 overflow-hidden">
+      <GlassCard disableHoverEffects isDarkMode={isDarkMode} className="w-full max-sm border-amber-500/40 shadow-3xl relative z-10 p-0 overflow-hidden">
         <div className={`p-6 border-b ${isDarkMode ? 'border-white/10 bg-white/[0.02]' : 'border-zinc-100 bg-zinc-50'} flex justify-between items-center`}>
           <h3 className={`text-xl font-black italic tracking-tighter uppercase ${isDarkMode ? 'text-white' : 'text-900'}`}>Catering Pref</h3>
           <button onClick={onClose} className="w-10 h-10 rounded-2xl flex items-center justify-center text-zinc-500 hover:text-amber-500 transition-colors">
@@ -231,7 +231,7 @@ const ManageReservationModal: React.FC<{ hotel: Hotel; onClose: () => void; isDa
   return (
     <div className="fixed inset-0 z-[210] flex items-center justify-center p-6 animate-in fade-in zoom-in-95 duration-500">
       <div className="absolute inset-0 bg-black/90 backdrop-blur-xl" onClick={onClose} />
-      <GlassCard isDarkMode={isDarkMode} className="w-full max-sm border-amber-500/40 shadow-3xl relative z-10 p-0 overflow-hidden">
+      <GlassCard disableHoverEffects isDarkMode={isDarkMode} className="w-full max-sm border-amber-500/40 shadow-3xl relative z-10 p-0 overflow-hidden">
         <div className={`p-6 border-b ${isDarkMode ? 'border-white/10 bg-white/[0.02]' : 'border-zinc-100 bg-zinc-50'} flex justify-between items-center`}>
           <h3 className={`text-xl font-black italic tracking-tighter uppercase ${isDarkMode ? 'text-white' : 'text-900'}`}>Operational Registry</h3>
           <button onClick={onClose} className="w-10 h-10 rounded-2xl flex items-center justify-center text-zinc-500 hover:text-amber-500 transition-colors">
@@ -264,7 +264,7 @@ const RoomUpgradeModal: React.FC<{ hotel: Hotel; onClose: () => void; isDarkMode
   return (
     <div className="fixed inset-0 z-[210] flex items-center justify-center p-6 animate-in fade-in zoom-in-95 duration-500">
       <div className="absolute inset-0 bg-black/90 backdrop-blur-xl" onClick={onClose} />
-      <GlassCard isDarkMode={isDarkMode} className="w-full max-sm border-amber-500/40 shadow-3xl relative z-10 p-0 overflow-hidden">
+      <GlassCard disableHoverEffects isDarkMode={isDarkMode} className="w-full max-sm border-amber-500/40 shadow-3xl relative z-10 p-0 overflow-hidden">
         <div className={`p-6 border-b ${isDarkMode ? 'border-white/10 bg-white/[0.02]' : 'border-zinc-100 bg-zinc-50'} flex justify-between items-center`}>
           <h3 className={`text-xl font-black italic tracking-tighter uppercase ${isDarkMode ? 'text-white' : 'text-900'}`}>Tier Elevation</h3>
           <button onClick={onClose} className="w-10 h-10 rounded-2xl flex items-center justify-center text-zinc-500 hover:text-amber-500 transition-colors">
@@ -292,7 +292,7 @@ const SpaBookingModal: React.FC<{ onClose: () => void; isDarkMode: boolean }> = 
   return (
     <div className="fixed inset-0 z-[210] flex items-center justify-center p-6 animate-in fade-in zoom-in-95 duration-500">
       <div className="absolute inset-0 bg-black/90 backdrop-blur-xl" onClick={onClose} />
-      <GlassCard isDarkMode={isDarkMode} className="w-full max-sm border-amber-500/40 shadow-3xl relative z-10 p-0 overflow-hidden">
+      <GlassCard disableHoverEffects isDarkMode={isDarkMode} className="w-full max-sm border-amber-500/40 shadow-3xl relative z-10 p-0 overflow-hidden">
         <div className={`p-6 border-b ${isDarkMode ? 'border-white/10 bg-white/[0.02]' : 'border-zinc-100 bg-zinc-50'} flex justify-between items-center`}>
           <h3 className={`text-xl font-black italic tracking-tighter uppercase ${isDarkMode ? 'text-white' : 'text-900'}`}>Wellness Window</h3>
           <button onClick={onClose} className="w-10 h-10 rounded-2xl flex items-center justify-center text-zinc-500 hover:text-amber-500 transition-colors">
@@ -324,10 +324,20 @@ const Travel: React.FC<TravelProps> = ({ isDarkMode, initialTab = 'flights', onT
   const [reservationHotel, setReservationHotel] = useState<Hotel | null>(null);
   const [upgradeHotel, setUpgradeHotel] = useState<Hotel | null>(null);
   const [isSpaBookingOpen, setIsSpaBookingOpen] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setActiveTab(initialTab);
   }, [initialTab]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+        if (scrollRef.current) {
+            scrollRef.current.scrollTo(0, 0);
+        }
+    }, 10);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleTabClick = (tab: 'flights' | 'hotels') => {
     setActiveTab(tab);
@@ -345,7 +355,7 @@ const Travel: React.FC<TravelProps> = ({ isDarkMode, initialTab = 'flights', onT
   ];
 
   return (
-    <div className="pb-28 pt-10 px-6 space-y-6 animate-in fade-in duration-500 overflow-y-auto max-h-screen hide-scrollbar">
+    <div ref={scrollRef} className="pb-24 pt-10 px-6 space-y-6 animate-in fade-in duration-500 overflow-y-auto max-h-screen hide-scrollbar">
       <div className="flex justify-between items-end px-1">
         <div>
           <h2 className={`text-3xl font-black tracking-tight italic uppercase ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>{activeTab}</h2>
@@ -473,7 +483,9 @@ const Travel: React.FC<TravelProps> = ({ isDarkMode, initialTab = 'flights', onT
             </GlassCard>
           ))
         )}
-        <PoweredBy isDarkMode={isDarkMode} />
+        <div className="pt-8">
+            <PoweredBy isDarkMode={isDarkMode} />
+        </div>
       </div>
 
       {isLookupOpen && <LookupModal isDarkMode={isDarkMode} onClose={() => setIsLookupOpen(false)} />}
@@ -483,7 +495,7 @@ const Travel: React.FC<TravelProps> = ({ isDarkMode, initialTab = 'flights', onT
       {confirmedFlight && <TravelConfirmationModal flight={confirmedFlight} isDarkMode={isDarkMode} onClose={() => setConfirmedFlight(null)} />}
       {reservationHotel && <ManageReservationModal hotel={reservationHotel} isDarkMode={isDarkMode} onClose={() => setReservationHotel(null)} />}
       {upgradeHotel && <RoomUpgradeModal hotel={upgradeHotel} isDarkMode={isDarkMode} onClose={() => setUpgradeHotel(null)} />}
-      {isSpaBookingOpen && <SpaBookingModal isDarkMode={isDarkMode} onClose={() => setIsSpaBookingOpen(false)} />}
+      {isSpaBookingOpen && <SpaBookingModal onClose={() => setIsSpaBookingOpen(false)} isDarkMode={isDarkMode} />}
     </div>
   );
 };

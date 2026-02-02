@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import GlassCard from '../components/GlassCard';
 import StatusBadge from '../components/StatusBadge';
 import { MOCK_SCHEDULE } from '../mockData';
@@ -125,9 +125,19 @@ const NotificationPopup: React.FC<{ isOpen: boolean; onClose: () => void; isDark
 const Home: React.FC<HomeProps> = ({ isDarkMode, onToggleTheme, onNavigateToTravel, onNavigateToProfile }) => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [showLiveStream, setShowLiveStream] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+        if (scrollRef.current) {
+            scrollRef.current.scrollTo(0, 0);
+        }
+    }, 10);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
-    <div className={`pb-28 pt-10 px-6 space-y-8 animate-in fade-in duration-1000 transition-colors`}>
+    <div ref={scrollRef} className={`pb-24 pt-10 px-6 space-y-8 animate-in fade-in duration-1000 transition-colors overflow-y-auto max-h-screen hide-scrollbar`}>
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-3.5">
           <button 

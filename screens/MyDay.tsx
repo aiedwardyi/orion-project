@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import GlassCard from '../components/GlassCard';
 import StatusBadge from '../components/StatusBadge';
 import { MOCK_SCHEDULE } from '../mockData';
@@ -19,6 +19,16 @@ const MyDay: React.FC<MyDayProps> = ({ isDarkMode }) => {
   const active = MOCK_SCHEDULE.filter(i => i.group === 'active');
   const upcoming = MOCK_SCHEDULE.filter(i => i.group === 'next' || i.group === 'later');
   const completed = MOCK_SCHEDULE.filter(i => i.group === 'completed');
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+        if (scrollRef.current) {
+            scrollRef.current.scrollTo(0, 0);
+        }
+    }, 10);
+    return () => clearTimeout(timer);
+  }, []);
 
   const renderItem = (item: typeof MOCK_SCHEDULE[0], isLast: boolean) => (
     <div key={item.id} className="relative flex gap-6 pl-2 group">
@@ -48,7 +58,7 @@ const MyDay: React.FC<MyDayProps> = ({ isDarkMode }) => {
   );
 
   return (
-    <div className="pb-28 pt-10 px-6 space-y-6 animate-in slide-in-from-bottom-4 duration-500 overflow-y-auto max-h-screen hide-scrollbar">
+    <div ref={scrollRef} className="pb-24 pt-10 px-6 space-y-6 animate-in slide-in-from-bottom-4 duration-500 overflow-y-auto max-h-screen hide-scrollbar">
       <div className="mb-2">
         <h2 className={`text-3xl font-black tracking-tight italic ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>SCHEDULE</h2>
         <p className="text-zinc-500 text-[10px] font-black uppercase tracking-[0.2em] mt-1">Official Timeline • Day 04</p>

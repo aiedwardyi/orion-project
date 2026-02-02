@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import GlassCard from '../components/GlassCard';
 import StatusBadge from '../components/StatusBadge';
 import { PoweredBy } from '../components/Branding';
@@ -199,6 +199,16 @@ const Taxi: React.FC<RequestsProps> = ({ isDarkMode }) => {
   const [isBooking, setIsBooking] = useState(false);
   const [showMap, setShowMap] = useState(false);
   const [selectedSpecs, setSelectedSpecs] = useState<Vehicle | null>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+        if (scrollRef.current) {
+            scrollRef.current.scrollTo(0, 0);
+        }
+    }, 10);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleBook = (vehicle: Vehicle) => {
     setIsBooking(true);
@@ -209,7 +219,7 @@ const Taxi: React.FC<RequestsProps> = ({ isDarkMode }) => {
   };
 
   return (
-    <div className="pb-32 pt-10 px-6 space-y-8 animate-in fade-in duration-700 overflow-y-auto max-h-screen hide-scrollbar">
+    <div ref={scrollRef} className="pb-24 pt-10 px-6 space-y-8 animate-in fade-in duration-700 overflow-y-auto max-h-screen hide-scrollbar">
       <div className="flex justify-between items-center">
         <div>
           <h2 className={`text-3xl font-black tracking-tight italic uppercase ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>Taxi</h2>

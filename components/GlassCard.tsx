@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 interface GlassCardProps {
@@ -8,17 +7,28 @@ interface GlassCardProps {
   bgImage?: string;
   noPadding?: boolean;
   isDarkMode?: boolean;
+  disableHoverEffects?: boolean;
 }
 
-const GlassCard: React.FC<GlassCardProps> = ({ children, className = '', onClick, bgImage, noPadding, isDarkMode = true }) => {
+const GlassCard: React.FC<GlassCardProps> = ({ 
+  children, 
+  className = '', 
+  onClick, 
+  bgImage, 
+  noPadding, 
+  isDarkMode = true,
+  disableHoverEffects = false
+}) => {
   const baseClasses = isDarkMode 
     ? "glass border-white/5 bg-neutral-900/70 shadow-[0_20px_50px_rgba(0,0,0,0.5)]" 
     : "bg-white/80 backdrop-blur-xl border-zinc-200 shadow-[0_8px_30px_rgb(0,0,0,0.04)]";
 
+  const hoverClasses = disableHoverEffects ? "" : "active:scale-[0.98] hover:scale-[1.02] hover:-translate-y-1";
+
   return (
     <div 
       onClick={onClick}
-      className={`${baseClasses} rounded-3xl overflow-hidden active:scale-[0.98] transition-all relative ${noPadding ? '' : 'p-4'} ${className} ${onClick ? 'cursor-pointer' : ''}`}
+      className={`${baseClasses} rounded-3xl overflow-hidden ${hoverClasses} transition-all duration-300 ease-out relative ${noPadding ? '' : 'p-4'} ${className} ${onClick ? 'cursor-pointer' : ''}`}
     >
       {bgImage && (
         <div className="absolute inset-0 z-0">
